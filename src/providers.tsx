@@ -6,8 +6,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import ChannelService from "./components/channel-talk";
 
 function makeQueryClient() {
@@ -36,7 +36,11 @@ const QueryProviders = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    ChannelService.loadScript();
+    const timer = setTimeout(() => {
+      ChannelService.loadScript();
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
